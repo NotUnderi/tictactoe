@@ -10,9 +10,9 @@ import kotlin.concurrent.schedule
 import android.os.Handler
 import android.widget.Button
 import android.view.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    val TAG = "MyActivity"
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +28,10 @@ class MainActivity : AppCompatActivity() {
         var button9 = findViewById<ImageButton>(R.id.imageButton9)
         var button10 = findViewById<ImageButton>(R.id.imageButton10)
         var start = findViewById<Button>(R.id.start)
+        var restart = findViewById<Button>(R.id.restart)
 
-        var teksti = findViewById<TextView>(R.id.textView3)
-        var txt = "Aika PPAP moment";
+        var winText = findViewById<TextView>(R.id.voitto)
+        var winText2 = findViewById<TextView>(R.id.voitto2)
         main(
             button2,
             button3,
@@ -42,14 +43,10 @@ class MainActivity : AppCompatActivity() {
             button9,
             button10,
             start,
-            teksti,
-            txt
+            restart,
+            winText,
+            winText2
         );
-    }
-
-    //var button4 = findViewById<Button>(R.id.button4)
-    fun delayFunction(function: () -> Unit, delay: Long) {
-        Handler().postDelayed(function, delay)
     }
 
     fun main(
@@ -63,11 +60,13 @@ class MainActivity : AppCompatActivity() {
         button9: ImageButton,
         button10: ImageButton,
         start: Button,
-        teksti: TextView,
-        txt: String
+        restart: Button,
+        winText: TextView,
+        winText2: TextView
     ) {
-        val status = arrayOf(0, 0, 0, 0, 0 ,0 ,0 ,0 ,0)
-
+        var status = arrayOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
+        var player = 0;
+        var over = 0
         start.setOnClickListener {
             start.visibility = View.GONE
             button2.visibility = View.VISIBLE
@@ -80,133 +79,163 @@ class MainActivity : AppCompatActivity() {
             button9.visibility = View.VISIBLE
             button10.visibility = View.VISIBLE
             Handler().postDelayed({}, 500)
-
-            //game(button2,button3,button4,button5,button6,button7,button8,button9,button10)
-
-
         }
 
+        restart.setOnClickListener() {
+            restart.visibility = View.GONE
+            status[0] = 0
+            status[1] = 0
+            status[2] = 0
+            status[3] = 0
+            status[4] = 0
+            status[5] = 0
+            status[6] = 0
+            status[7] = 0
+            status[8] = 0
 
-        var player = 0;
+            button2.setImageResource(R.drawable.empty)
+            button3.setImageResource(R.drawable.empty)
+            button4.setImageResource(R.drawable.empty)
+            button5.setImageResource(R.drawable.empty)
+            button6.setImageResource(R.drawable.empty)
+            button7.setImageResource(R.drawable.empty)
+            button8.setImageResource(R.drawable.empty)
+            button9.setImageResource(R.drawable.empty)
+            button10.setImageResource(R.drawable.empty)
+
+            winText.text = ""
+            winText2.text = ""
+
+            player = 0
+            over = 0
+        }
+
         button2.setOnClickListener() {
-            if (player == 0) {
-                button2.setImageResource(R.drawable.x);player = 1;status[0] = 1
-            } else if (player == 1) {
-                button2.setImageResource(R.drawable.o);player = 0;status[0] = 2
+            if (status[0] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button2.setImageResource(R.drawable.x);player = 1;status[0] = 1
+                } else if (player == 1) {
+                    button2.setImageResource(R.drawable.o);player = 0;status[0] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button3.setOnClickListener() {
-            if (player == 0) {
-                button3.setImageResource(R.drawable.x);player = 1;status[1] = 1
-            } else if (player == 1) {
-                button3.setImageResource(R.drawable.o);player = 0;status[1] = 2
+            if (status[1] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button3.setImageResource(R.drawable.x);player = 1;status[1] = 1
+                } else if (player == 1) {
+                    button3.setImageResource(R.drawable.o);player = 0;status[1] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button4.setOnClickListener() {
-            if (player == 0) {
-                button4.setImageResource(R.drawable.x);player = 1;status[2] = 1
-            } else if (player == 1) {
-                button4.setImageResource(R.drawable.o);player = 0;status[2] = 2
+            if (status[2] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button4.setImageResource(R.drawable.x);player = 1;status[2] = 1
+                } else if (player == 1) {
+                    button4.setImageResource(R.drawable.o);player = 0;status[2] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button5.setOnClickListener() {
-            if (player == 0) {
-                button5.setImageResource(R.drawable.x);player = 1;status[3] = 1
-            } else if (player == 1) {
-                button5.setImageResource(R.drawable.o);player = 0;status[3] = 2
+            if (status[3] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button5.setImageResource(R.drawable.x);player = 1;status[3] = 1
+                } else if (player == 1) {
+                    button5.setImageResource(R.drawable.o);player = 0;status[3] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button6.setOnClickListener() {
-            if (player == 0) {
-                button6.setImageResource(R.drawable.x);player = 1;status[4] = 1
-            } else if (player == 1) {
-                button6.setImageResource(R.drawable.o);player = 0;status[4] = 2
+            if (status[4] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button6.setImageResource(R.drawable.x);player = 1;status[4] = 1
+                } else if (player == 1) {
+                    button6.setImageResource(R.drawable.o);player = 0;status[4] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button7.setOnClickListener() {
-            if (player == 0) {
-                button7.setImageResource(R.drawable.x);player = 1;status[5] = 1
-            } else if (player == 1) {
-                button7.setImageResource(R.drawable.o);player = 0;status[5] = 2
+            if (status[5] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button7.setImageResource(R.drawable.x);player = 1;status[5] = 1
+                } else if (player == 1) {
+                    button7.setImageResource(R.drawable.o);player = 0;status[5] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button8.setOnClickListener() {
-            if (player == 0) {
-                button8.setImageResource(R.drawable.x);player = 1;status[6] = 1
-            } else if (player == 1) {
-                button8.setImageResource(R.drawable.o);player = 0;status[6] = 2
+            if (status[6] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button8.setImageResource(R.drawable.x);player = 1;status[6] = 1
+                } else if (player == 1) {
+                    button8.setImageResource(R.drawable.o);player = 0;status[6] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
         }
         button9.setOnClickListener() {
-            if (player == 0) {
-                button9.setImageResource(R.drawable.x);player = 1;status[7] = 1
-            } else if (player == 1) {
-                button9.setImageResource(R.drawable.o);player = 0;status[7] = 2
+            if (status[7] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button9.setImageResource(R.drawable.x);player = 1;status[7] = 1
+                } else if (player == 1) {
+                    button9.setImageResource(R.drawable.o);player = 0;status[7] = 2
+                }
             }
-            check(status)
-
+            check(status, winText, winText2, restart)
         }
         button10.setOnClickListener() {
-            if (player == 0) {
-                button10.setImageResource(R.drawable.x);player = 1;status[8] = 1
-            } else if (player == 1) {
-                button10.setImageResource(R.drawable.o);player = 0;status[8] = 2
+            if (status[8] == 0 && over == 0 && restart.getVisibility() == View.GONE) {
+                if (player == 0) {
+                    button10.setImageResource(R.drawable.x);player = 1;status[8] = 1
+                } else if (player == 1) {
+                    button10.setImageResource(R.drawable.o);player = 0;status[8] = 2
+                }
             }
-            check(status)
+            check(status, winText, winText2, restart)
+
         }
-
-        /*
-        var i = 0
-        button2.setOnClickListener {
-            //fishcalc(255,100);
-            teksti.setText(txt)
-        }
-        button3.setOnClickListener{
-            teksti.setText(" ")
-        }
-        button6.setOnClickListener{
-
-            Log.i(TAG,"Button 6 pressed")
-            Log.i(TAG,"$i")
-            if (i == 0) {
-                button6.setImageResource(R.drawable.x)
-                i = 1
-            }
-            else if ( i == 1){
-                button6.setImageResource(R.drawable.empty)
-                var resource = R.drawable.empty
-                Log.i(TAG,"Should go to empty, res id is $resource")
-                i = 0
-            }*/
-    }
-
-    private fun fishcalc(fish: Int, food: Int): Double {
-
-        Log.i(TAG, "Bruh")
-        var newfish = food * 0.5
-        var totalfish = newfish + fish
-        Log.i(TAG, "$totalfish")
-        return totalfish
     }
 }
 
-  fun check(status: Array<Int>){
-    if(status[0] == 1 && status[1] == 1 && status[2] == 1 || status[0] == 1 && status[3] == 1 && status[6] == 1 ||status[1] == 1 && status[4] == 1 && status[7] == 1 || status[2] == 1 && status[5] == 1 && status[8] == 1 || status[3] == 1 && status[4] == 1 && status[5] == 1 || status[6] == 1 && status[7] == 1 && status[8] == 1){
-        win1()
-    }
- }
 
- fun win1(){
-        Log.i("Voitto","Voitit pelin")
+fun check(status: Array<Int>, winText: TextView, winText2: TextView, restart: Button) {
+    Log.i("Status", Arrays.toString(status))
+    if (status[0] == 1 && status[1] == 1 && status[2] == 1 || status[0] == 1 && status[3] == 1 && status[6] == 1 || status[1] == 1 && status[4] == 1 && status[7] == 1 || status[2] == 1 && status[5] == 1 && status[8] == 1 || status[3] == 1 && status[4] == 1 && status[5] == 1 || status[6] == 1 && status[7] == 1 && status[8] == 1) {
+        win1(winText, winText2, restart)
+    }
+    else if (status[0] == 2 && status[1] == 2 && status[2] == 2 || status[0] == 2 && status[3] == 2 && status[6] == 2 || status[1] == 2 && status[4] == 2 && status[7] == 2 || status[2] == 2 && status[5] == 2 && status[8] == 2 || status[3] == 2 && status[4] == 2 && status[5] == 2 || status[6] == 2 && status[7] == 2 && status[8] == 2) {
+        win2(winText, winText2, restart)
+    }
+    else if (status[0] != 0 && status[1] != 0 && status[2] != 0 && status[3] != 0 && status[4] != 0 && status[5] != 0 && status[6] != 0 && status[7] != 0 && status[8] != 0) {
+        tie(winText, winText2, restart)
+    }
 }
 
- fun win2(){
+fun win1(winText: TextView, winText2: TextView, restart: Button) {
+    Log.i("Voitto", "Voitit pelin")
+    winText.setText("X voittaa")
+    winText2.setText("X voittaa")
+    restart.visibility = View.VISIBLE
 
+}
+
+fun win2(winText: TextView, winText2: TextView, restart: Button) {
+    Log.i("Voitto", "Voitit pelin")
+    winText.text = "O voittaa"
+    winText2.text = "O voittaa"
+    restart.visibility = View.VISIBLE
+}
+
+fun tie(winText: TextView, winText2: TextView, restart: Button){
+    Log.i("Voitto", "Voitit pelin")
+    winText.text = "Tasapeli"
+    winText2.text = "Tasapeli"
+    restart.visibility = View.VISIBLE
 }

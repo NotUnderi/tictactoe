@@ -2,4 +2,6 @@
     <string name="app_name">test</string>
     <string name="heininen_tk_app">HEININEN.TK APP</string>
     <string name="ristinolla">Ristinolla</string>
+    <string name="voitto">Voitto</string>
+    <string name="voitto2">Voitto2</string>
 </resources>
