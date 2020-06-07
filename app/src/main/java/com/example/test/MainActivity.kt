@@ -209,11 +209,9 @@ fun check(status: Array<Int>, winText: TextView, winText2: TextView, restart: Bu
     Log.i("Status", Arrays.toString(status))
     if (status[0] == 1 && status[1] == 1 && status[2] == 1 || status[0] == 1 && status[3] == 1 && status[6] == 1 || status[1] == 1 && status[4] == 1 && status[7] == 1 || status[2] == 1 && status[5] == 1 && status[8] == 1 || status[3] == 1 && status[4] == 1 && status[5] == 1 || status[6] == 1 && status[7] == 1 && status[8] == 1) {
         win1(winText, winText2, restart)
-    }
-    else if (status[0] == 2 && status[1] == 2 && status[2] == 2 || status[0] == 2 && status[3] == 2 && status[6] == 2 || status[1] == 2 && status[4] == 2 && status[7] == 2 || status[2] == 2 && status[5] == 2 && status[8] == 2 || status[3] == 2 && status[4] == 2 && status[5] == 2 || status[6] == 2 && status[7] == 2 && status[8] == 2) {
+    } else if (status[0] == 2 && status[1] == 2 && status[2] == 2 || status[0] == 2 && status[3] == 2 && status[6] == 2 || status[1] == 2 && status[4] == 2 && status[7] == 2 || status[2] == 2 && status[5] == 2 && status[8] == 2 || status[3] == 2 && status[4] == 2 && status[5] == 2 || status[6] == 2 && status[7] == 2 && status[8] == 2) {
         win2(winText, winText2, restart)
-    }
-    else if (status[0] != 0 && status[1] != 0 && status[2] != 0 && status[3] != 0 && status[4] != 0 && status[5] != 0 && status[6] != 0 && status[7] != 0 && status[8] != 0) {
+    } else if (status[0] != 0 && status[1] != 0 && status[2] != 0 && status[3] != 0 && status[4] != 0 && status[5] != 0 && status[6] != 0 && status[7] != 0 && status[8] != 0) {
         tie(winText, winText2, restart)
     }
 }
@@ -233,7 +231,7 @@ fun win2(winText: TextView, winText2: TextView, restart: Button) {
     restart.visibility = View.VISIBLE
 }
 
-fun tie(winText: TextView, winText2: TextView, restart: Button){
+fun tie(winText: TextView, winText2: TextView, restart: Button) {
     Log.i("Voitto", "Voitit pelin")
     winText.text = "Tasapeli"
     winText2.text = "Tasapeli"
