@@ -3,5 +3,4 @@ simple kotlin tictactoe
 
 made in android studio
 
-download apk -> https://heininen.tk/ristinolla.apk
-updated 7.6.2020
+updated 20.1.2021 deleted link
